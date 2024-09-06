@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+# Book_Manager
+=======
 # Book_Manager
 8조 - Vu Tuan Anh_조장, 이재훈, 서지운, 권주회
 
@@ -16,7 +19,7 @@
 - push 핼 때 git push origin main 사용하기
 
 코드 내용
-- create_책 추가 : 
-- read_책 조회 : 
-- update_책 수정 : 
-- delete_책 삭제 : 
+- create_책 추가
+- read_책 조회
+- update_책 수정
+- delete_책 삭제
