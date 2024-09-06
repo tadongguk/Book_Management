@@ -28,6 +28,7 @@ def delete_genre(id, name):
     else:
         print(f"ID {id} 및 이름 '{name}'의 장르를 찾을 수 없습니다.")
     conn.commit()
+    conn.close()
     show_genre_list()
 
 def show_genre_list():
