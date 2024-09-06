@@ -79,7 +79,8 @@ books = [
     ('1984', 2, 2, 1949, '978-0451524935'),
     ('Pride and Prejudice', 3, 3, 1813, '978-0141439518'),
     ('The Great Gatsby', 4, 4, 1925, '978-0743273565'),
-    ('One Hundred Years of Solitude', 5, 5, 1967, '978-0060883287')
+    ('One Hundred Years of Solitude', 5, 5, 1967, '978-0060883287'),
+    
 ]
 cursor.executemany('INSERT INTO books (title, author_id, genre_id, year, isbn) VALUES (?, ?, ?, ?, ?)', books)
 
