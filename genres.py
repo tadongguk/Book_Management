@@ -3,69 +3,67 @@ import sqlite3
 conn = sqlite3.connect('book.db')
 cursor = conn.cursor()
 
-cursor.execute("SELECT * FROM books")
-
-books = []
-
-genres = [
-    "소설 (Fiction)", "비소설 (Non-Fiction)", "아동문학 (Children's Literature)", 
-    "시 (Poetry)", "공포 (Horror)", "판타지 (Fantasy)", "SF (Science Fiction)", 
-    "미스터리/추리 (Mystery/Detective)", "역사 (Historical)", "자기계발 (Self-help)", 
-    "교육 (Educational)", "경제/경영 (Business/Economics)", "과학 (Science)", 
-    "기술 (Technology)", "철학/종교 (Philosophy/Religion)", "예술 (Art)", 
-    "요리 (Cooking)", "여행 (Travel)", "건강/의학 (Health/Medical)", 
-    "스포츠 (Sports)"
-]
-
-def add_book():
-    title = input("책 제목을 입력하세요: ")
-    author = input("저자를 입력하세요: ")
-    year = input("출판 연도를 입력하세요: ")
-    publisher = input("출판사를 입력하세요: ")
-    genres = input("장르를 입력하세요: ")
-
-print("\n--- 장르 목록 ---")
-for i, genre in enumerate(genres, 1):
-    print(f"{i}. {genre}")
-    
-genre_choice = int(input("\n장르 번호를 선택하세요: ")) - 1
-selected_genre = genres[genre_choice]
-
-book = {
-    "제목": title,
-    "저자": author,
-    "출판 연도": year,
-    "출판사": publisher,
-    "장르": selected_genre
-    }
-
-books.append(book)
-print(f"|n'{title} 책이 추가되었습니다.|n")
-
-def list_books():
-    if books:
-        print("\n--- 책 목록 ---")
-        for i, book in enumerate(books, 1):
-            print(f"{i}. {book['제목']} ({book['저자']}, {book['출판사']}, {book['출판 연도']}) - {book['장르']}")
+def update_genre(existing_name, new_name):
+    cursor.execute("UPDATE genres SET name = ? WHERE name = ?", (new_name, existing_name))
+    if cursor.rowcount > 0:
+        print(f"'{existing_name}' 장르가 '{new_name}'으로 수정되었습니다.")
     else:
-        print("\n책 목록이 비어 있습니다.\n")
+        print(f"'{existing_name}' 장르를 찾을 수 없습니다.")
+    conn.commit()
+    show_genre_list()
 
-def menu():
-    while True:
-        print("\n1. 책 추가")
-        print("2. 책 목록 보기")
-        print("3. 종료")
-        
-        choice = input("메뉴를 선택하세요: ")
+def add_genre(new_name):
+    try:
+        cursor.execute("INSERT INTO genres (name) VALUES (?)", (new_name,))
+        print(f"'{new_name}' 장르가 추가되었습니다.")
+    except sqlite3.IntegrityError:
+        print(f"'{new_name}' 장르는 이미 존재합니다.")
+    conn.commit()
+    show_genre_list()
 
-        if choice == '1':
-            add_book()
-        elif choice == '2':
-            list_books()
-        elif choice == '3':
-            print("프로그램을 종료합니다.")
-            break
+def delete_genre(id, name):
+    cursor.execute("DELETE FROM genres WHERE id = ? AND name = ?", (id, name))
+    if cursor.rowcount > 0:
+        print(f"ID {id} 및 이름 '{name}'의 장르가 삭제되었습니다.")
+    else:
+        print(f"ID {id} 및 이름 '{name}'의 장르를 찾을 수 없습니다.")
+    conn.commit()
+    show_genre_list()
+
+def show_genre_list():
+    cursor.execute("SELECT id, name FROM genres")
+    genres = cursor.fetchall()
+    print("\n현재 장르 목록:")
+    for genre in genres:
+        print(f"ID: {genre[0]}, Name: {genre[1]}")
+    print()
+
+def get_genre_id_by_name(name):
+    cursor.execute("SELECT id FROM genres WHERE name = ?", (name,))
+    result = cursor.fetchone()
+    return result[0] if result else None
+
+def main():
+    action = input("장르를 수정하려면 '수정', 추가하려면 '추가', 삭제하려면 '삭제'를 입력하세요: ").strip()
+    
+    if action == "수정":
+        existing_name = input("수정할 장르 이름을 입력하세요: ").strip()
+        new_name = input("새 장르 이름을 입력하세요: ").strip()
+        update_genre(existing_name, new_name)
+    elif action == "추가":
+        new_name = input("추가할 장르 이름을 입력하세요: ").strip()
+        add_genre(new_name)
+    elif action == "삭제":
+        name = input("삭제할 장르 이름을 입력하세요: ").strip()
+        genre_id = get_genre_id_by_name(name)
+        if genre_id:
+            delete_genre(genre_id, name)
         else:
-            print("잘못된 선택입니다. 다시 시도하세요.")
+            print(f"'{name}' 장르를 찾을 수 없습니다.")
+    else:
+        print("잘못된 입력입니다. '수정', '추가', 또는 '삭제'를 입력하세요.")
 
-main()
+    conn.close()
+
+if __name__ == "__main__":
+    main()
