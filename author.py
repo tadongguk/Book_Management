@@ -9,7 +9,7 @@ cursor = conn.cursor()
 def add_author(name, birth_year, country):
     cursor.execute("INSERT INTO authors (name, birth_year, country) VALUES (?, ?, ?)", (name, birth_year, country))
     conn.commit()
-    print(f"Author '{name}' added.")
+    print(f"\nAuthor '{name}' added.\n")
 
 
 # Read
@@ -20,6 +20,7 @@ def get_all_authors():
     print("\nList of Authors : ")
     for author in authors:
         print(f"ID : {author[0]}, Name : {author[1]}, Birth Year : {author[2]}, Country : {author[3]}")
+    print("")
 
 # Update
 def update_author(author_id, name=None, birth_year=None, country=None):
@@ -42,14 +43,14 @@ def update_author(author_id, name=None, birth_year=None, country=None):
 
     cursor.execute(query, params)
     conn.commit()
-    print(f"Author with ID {author_id} updated.")
+    print(f"\nAuthor with ID {author_id} updated.")
 
 
 # Delete
 def delete_author(author_id):
     cursor.execute("DELETE FROM authors WHERE id = ?", (author_id,))
     conn.commit()
-    print(f"Author with ID {author_id} deleted.")
+    print(f"\nAuthor with ID {author_id} deleted.")
 
 
 
