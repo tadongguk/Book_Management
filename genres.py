@@ -41,3 +41,31 @@ book = {
 
 books.append(book)
 print(f"|n'{title} 책이 추가되었습니다.|n")
+
+def list_books():
+    if books:
+        print("\n--- 책 목록 ---")
+        for i, book in enumerate(books, 1):
+            print(f"{i}. {book['제목']} ({book['저자']}, {book['출판사']}, {book['출판 연도']}) - {book['장르']}")
+    else:
+        print("\n책 목록이 비어 있습니다.\n")
+
+def menu():
+    while True:
+        print("\n1. 책 추가")
+        print("2. 책 목록 보기")
+        print("3. 종료")
+        
+        choice = input("메뉴를 선택하세요: ")
+
+        if choice == '1':
+            add_book()
+        elif choice == '2':
+            list_books()
+        elif choice == '3':
+            print("프로그램을 종료합니다.")
+            break
+        else:
+            print("잘못된 선택입니다. 다시 시도하세요.")
+
+main()
