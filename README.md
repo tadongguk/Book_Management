@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-# Book_Manager
-=======
 # Book_Manager
 8조 - Vu Tuan Anh_조장, 이재훈, 서지운, 권주회
 
