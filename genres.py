@@ -22,7 +22,7 @@ def add_genre(new_name):
     show_genre_list()
 
 def delete_genre(id, name):
-    cursor.execute("DELETE FROM genres WHERE id = ? AND name = ?", (id, name))
+    cursor.execute("DELETE FROM genres WHERE id = ? ", (id, name))
     if cursor.rowcount > 0:
         print(f"ID {id} 및 이름 '{name}'의 장르가 삭제되었습니다.")
     else:

@@ -4,6 +4,9 @@
 # Book_Manager
 8조 - Vu Tuan Anh_조장, 이재훈, 서지운, 권주회
 
+
+pip install sql
+
 팀원 규칙
 - 모르는거 있는 사람이 손들면 다 같이 집중해서 돕기
 - 호칭은 ㅇㅇ님으로 통일
@@ -23,3 +26,4 @@
 - read_책 조회
 - update_책 수정
 - delete_책 삭제
+
