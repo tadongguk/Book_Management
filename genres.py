@@ -16,3 +16,28 @@ genres = [
     "요리 (Cooking)", "여행 (Travel)", "건강/의학 (Health/Medical)", 
     "스포츠 (Sports)"
 ]
+
+def add_book():
+    title = input("책 제목을 입력하세요: ")
+    author = input("저자를 입력하세요: ")
+    year = input("출판 연도를 입력하세요: ")
+    publisher = input("출판사를 입력하세요: ")
+    genres = input("장르를 입력하세요: ")
+
+print("\n--- 장르 목록 ---")
+for i, genre in enumerate(genres, 1):
+    print(f"{i}. {genre}")
+    
+genre_choice = int(input("\n장르 번호를 선택하세요: ")) - 1
+selected_genre = genres[genre_choice]
+
+book = {
+    "제목": title,
+    "저자": author,
+    "출판 연도": year,
+    "출판사": publisher,
+    "장르": selected_genre
+    }
+
+books.append(book)
+print(f"|n'{title} 책이 추가되었습니다.|n")
