@@ -1,6 +1,6 @@
 import sqlite3
 
-conn = sqlite3.connect('book.db')  # 데이터베이스 파일 이름
+conn = sqlite3.connect('book.db')
 cursor = conn.cursor()
 
 cursor.execute("SELECT * FROM books")
